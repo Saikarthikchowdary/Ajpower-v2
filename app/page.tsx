@@ -19,14 +19,14 @@ export default function HomePage() {
         <HeroWall />
         <div className="glass">
           <div className="bname">AJ Power Solutions</div>
-          <h1>Empowering India&rsquo;s Infrastructure with Specialized HT &amp; LT Electrification</h1>
+          <h1>Empowering India&rsquo;s Infrastructure With Specialized HT &amp; LT Electrification</h1>
           <p style={{ marginTop: 20 }}>
-            Specialized Electrical Contractors and Engineers — delivering design, execution, testing and 24/7
-            maintenance across IT parks, data centres, industries and hospitals.
+            Specialized Electrical Contractors and Engineers — Delivering Design, Execution, Testing and 24/7
+            Maintenance Across IT Parks, Data Centres, Industries and Hospitals.
           </p>
           <div className="acts">
             <Link className="btn btn-g" href="/services">Explore Services</Link>
-            <Link className="btn btn-w" href="/contact">Get in Touch</Link>
+            <Link className="btn btn-w" href="/contact">Get In Touch</Link>
           </div>
           <div className="soc">
             <a href="https://www.linkedin.com/in/aj-power-solutions-a887b316b/" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
@@ -44,8 +44,8 @@ export default function HomePage() {
 
         <div className="pinsec-content" id="clients">
           <div className="shead rv">
-            <div className="kicker">Trusted by industry leaders</div>
-            <h2>Delivering excellence <span style={{ color: "var(--teal-300)" }}>nationwide.</span></h2>
+            <div className="kicker">Trusted By Industry Leaders</div>
+            <h2>Delivering Excellence <span style={{ color: "var(--teal-300)" }}>Nationwide.</span></h2>
             <div className="rule"></div>
           </div>
 
@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="pinsec-content" id="why">
           <div className="shead rv">
             <div className="kicker">Why Choose Us</div>
-            <h2>Experience Excellence with <span style={{ color: "var(--teal-300)" }}>AJ Power Solutions</span></h2>
+            <h2>Experience Excellence With <span style={{ color: "var(--teal-300)" }}>AJ Power Solutions</span></h2>
             <div className="rule"></div>
           </div>
           <div className="rv mx-auto grid w-full max-w-[var(--maxw)] grid-cols-1 gap-7 sm:grid-cols-3">
