@@ -1404,11 +1404,15 @@ html {scroll-behavior:smooth}
    the image per route; this pins it behind the page so content scrolls over it.
    The veil is what makes the photo usable as a backdrop: strong enough that body
    copy and white cards stay readable, light enough that the image still reads.
-   Lift the two alpha values to show more photo, raise them to show less. */
-.v2-scope .pagebg {position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+   Lower the two alpha values to show more photo, raise them to show less. */
+.v2-scope .pagebg {position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  --veil-rgb:235,245,247;--veil-top:.66;--veil-bottom:.78}
+/* Pages whose content sits entirely inside opaque cards can carry a lighter veil,
+   because nothing reads directly off the photo. PageBackground.tsx adds this class. */
+.v2-scope .pagebg.pagebg-open {--veil-top:.54;--veil-bottom:.68}
 .v2-scope .pagebg img {width:100%;height:100%;object-fit:cover;display:block}
 .v2-scope .pagebg-veil {position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(235,245,247,.66) 0,rgba(235,245,247,.78) 320px)}
+  background:linear-gradient(180deg,rgba(var(--veil-rgb),var(--veil-top)) 0,rgba(var(--veil-rgb),var(--veil-bottom)) 320px)}
 
 .v2-scope .litepage {background:transparent;color:var(--body-text);min-height:calc(100vh - 90px);padding:70px 24px 90px}
 /* the photo layer is positioned, so page content needs to be too or it paints under it */
@@ -1498,8 +1502,8 @@ html {scroll-behavior:smooth}
 
 
 :root[data-theme="dark"] .v2-scope .litepage {background:transparent;color:#C3D2DF}
-:root[data-theme="dark"] .v2-scope .pagebg-veil {
-  background:linear-gradient(180deg,rgba(10,22,38,.82) 0,rgba(10,22,38,.91) 320px)}
+:root[data-theme="dark"] .v2-scope .pagebg {--veil-rgb:10,22,38;--veil-top:.82;--veil-bottom:.91}
+:root[data-theme="dark"] .v2-scope .pagebg.pagebg-open {--veil-top:.74;--veil-bottom:.85}
 :root[data-theme="dark"] .v2-scope .pagehero .curve {background:#0A1626}
 :root[data-theme="dark"] .v2-scope .ptitle {color:var(--teal-300)}
 :root[data-theme="dark"] .v2-scope .psub {color:#A9BBCA}
