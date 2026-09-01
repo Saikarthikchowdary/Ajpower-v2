@@ -137,10 +137,10 @@ header .navlinks a{position:relative;display:flex;flex-direction:column;align-it
 .pinsec{position:relative}
 .pinsec-bg{position:sticky;top:0;height:100vh;margin-bottom:-100vh;z-index:0;overflow:hidden}
 .pinsec-bg img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.03)}
-/* Scrim over the pinned sky photo. The previous values were tuned for a dark
-   sunset shot; this image is a bright blue sky with white cloud, so the floor is
-   raised to keep the white headings, stats and card text legible over cloud. */
-.pinsec-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,26,33,.66) 0%,rgba(5,26,33,.52) 16%,rgba(5,26,33,.5) 84%,rgba(5,26,33,.66) 100%)}
+/* Dark scrim over the pinned sky photo, held at 20% so the image stays clearly
+   visible. Legibility over cloud is carried by the .shead panel and the text
+   shadows on .statbar instead of by darkening the photo. */
+.pinsec-bg::after{content:"";position:absolute;inset:0;background:rgba(5,26,33,.2)}
 .pinsec-content{position:relative;z-index:2;padding:110px 24px;max-width:var(--maxw);margin:0 auto;width:100%;min-width:0}
 .shead{max-width:620px;margin:0 auto 44px;text-align:center;color:#fff;
  background:linear-gradient(160deg,var(--navy-900),var(--navy-800));
@@ -151,20 +151,11 @@ header .navlinks a{position:relative;display:flex;flex-direction:column;align-it
 .shead .rule{margin:18px auto 0;background:var(--teal-500);box-shadow:0 0 18px rgba(20,166,196,.55)}
 #why .shead h2{font-size:clamp(1.4rem,2.3vw,1.85rem)}
 
-/* Home-page headings set in caps. text-transform rather than literal caps in
-   the markup so the source stays readable and assistive tech still announces
-   normal sentence case. Every selector here is home-only: .hero, .shead and
-   the #clients/#why/#services/#cta ids appear in app/page.tsx and nowhere
-   else, and the home page is the one page SiteChrome leaves outside
-   .v2-scope. letter-spacing is eased back because caps set at the display
-   face's -.02em tracking read too tight -- except .bname, which keeps its own
-   tighter tracking from the equal-specificity rule further down this file. */
-.hero .bname,
-.hero .glass h1,
-#clients .shead h2,
-#why .shead h2,
-#services .shead h2,
-#cta .glass h2{text-transform:uppercase;letter-spacing:.01em}
+/* Only the brand name is set in caps, via text-transform rather than literal caps
+   so the source stays readable and assistive tech still announces it normally.
+   Every heading around it is Title Case straight from the markup in app/page.tsx.
+   (.bname's tracking comes from the equal-specificity rule further down this file.) */
+.hero .bname{text-transform:uppercase}
 
 .glass{position:relative;z-index:3;background:var(--glass);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-radius:18px;padding:34px 40px;text-align:center;max-width:760px;width:100%;
  border:1px solid rgba(255,255,255,.22);box-shadow:0 26px 60px -22px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.24);overflow:hidden}
@@ -220,29 +211,8 @@ header .navlinks a{position:relative;display:flex;flex-direction:column;align-it
 .statbar .n{font-size:clamp(2rem,3.4vw,3rem);font-weight:800;font-variant-numeric:tabular-nums;color:#fff;line-height:1;text-shadow:0 2px 18px rgba(0,0,0,.55)}
 .statbar .n .u{color:var(--green-l)}
 .statbar .l{color:#e6f0f5;font-size:.98rem;margin-top:9px;font-weight:600;text-shadow:0 2px 14px rgba(0,0,0,.6)}
-/* Scoped to .track so the grid-based .v2-scope .statbar on other pages is untouched, and
-   gated on .in so the cycle starts when the strip is first scrolled into view rather than
-   being caught mid-exit. */
-.statbar.in .track .s{animation:statCycle 9s linear infinite both}
-.statbar.in .track .s:nth-child(2){animation-delay:.16s}
-.statbar.in .track .s:nth-child(3){animation-delay:.32s}
-.statbar.in .track .s:nth-child(4){animation-delay:.48s}
-.statbar:hover .track .s{animation-play-state:paused}
-@keyframes statCycle{
-  /* hold, then accelerate off the left edge */
-  0%{transform:translateX(0)}
-  30%{transform:translateX(0);animation-timing-function:cubic-bezier(.6,.04,.98,.34)}
-  40%{transform:translateX(-130vw)}
-  /* Wait off-screen. The last stat (0.48s behind the first) only clears the edge at 40%
-     + its delay, so the bar must stay empty past that point — otherwise the first stat
-     starts coming back while the last one is still on its way out. */
-  50.99%{transform:translateX(-130vw)}
-  /* jump to just off the right edge, then decelerate back into place and hold */
-  51%{transform:translateX(130vw);animation-timing-function:cubic-bezier(.16,.84,.44,1)}
-  62%{transform:translateX(0)}
-  100%{transform:translateX(0)}
-}
-@media(prefers-reduced-motion:reduce){.statbar.in .track .s{animation:none}}
+/* The four stats sit still — they used to cycle off the left edge and return from
+   the right, which made the numbers hard to read at a glance. */
 /* heading directly on photo — no glass panel */
 
 /* client chips — thickglass light-glass style, logos bright */
