@@ -4,12 +4,15 @@ import Footer from "@/components/Footer";
 import ClientsMarquee from "@/components/ClientsMarquee";
 import CountUp from "@/components/CountUp";
 import { SERVICES } from "@/lib/data";
+import { HOME_BACKGROUNDS, resolveImage } from "@/lib/images";
 
+/* `tail` rides on the same line as the counted number ("13M+ Sq. Ft."), `label`
+   is the smaller line under it. */
 const STATS = [
-  { to: 13, unit: "M+", prefix: "", label: "Sq Ft Executed" },
-  { to: 25, unit: "+", prefix: "", label: "Marquee Clients" },
-  { to: 250, unit: "+", prefix: "", label: "Projects Delivered" },
-  { to: 100, unit: "%", prefix: "", label: "Satisfaction Focus" },
+  { to: 13, unit: "M+", tail: "Sq. Ft.", label: "Executed" },
+  { to: 250, unit: "+", tail: "Projects", label: "Delivered" },
+  { to: 3, unit: "", tail: "Metro Cities", label: "Presence" },
+  { to: 25, unit: "+", tail: "Marquee Clients", label: "Trusted" },
 ];
 
 export default function HomePage() {
@@ -19,7 +22,7 @@ export default function HomePage() {
         <HeroWall />
         <div className="glass">
           <div className="bname">AJ Power Solutions</div>
-          <h1>Empowering India&rsquo;s Infrastructure With Specialized HT &amp; LT Electrification</h1>
+          <h1>Powering India&rsquo;s Infrastructure with Advanced HT &amp; LT Electrification</h1>
           <p style={{ marginTop: 20 }}>
             Specialized Electrical Contractors and Engineers — Delivering Design, Execution, Testing and 24/7
             Maintenance Across IT Parks, Data Centres, Industries and Hospitals.
@@ -39,13 +42,13 @@ export default function HomePage() {
       <section className="pinsec">
         <div className="pinsec-bg">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/pinsec-bg.jpg" alt="Transmission towers against a bright blue sky" />
+          <img src={resolveImage(HOME_BACKGROUNDS.main.src, "background")} alt={HOME_BACKGROUNDS.main.alt} />
         </div>
 
         <div className="pinsec-content" id="clients">
           <div className="shead rv">
-            <div className="kicker">Trusted By Industry Leaders</div>
-            <h2>Delivering Excellence <span style={{ color: "var(--teal-300)" }}>Nationwide.</span></h2>
+            <div className="kicker">Trusted by industry leaders</div>
+            <h2>Safety. Quality. <span style={{ color: "var(--teal-300)" }}>Reliability.</span></h2>
             <div className="rule"></div>
           </div>
 
@@ -53,7 +56,10 @@ export default function HomePage() {
             <div className="track">
               {STATS.map((s, i) => (
                 <div className="s" key={i}>
-                  <div className="n">{s.prefix}<CountUp to={s.to} /><span className="u">{s.unit}</span></div>
+                  <div className="n">
+                    <CountUp to={s.to} /><span className="u">{s.unit}</span>
+                    <span className="t">{s.tail}</span>
+                  </div>
                   <div className="l">{s.label}</div>
                 </div>
               ))}
@@ -68,7 +74,7 @@ export default function HomePage() {
         <div className="pinsec-content" id="why">
           <div className="shead rv">
             <div className="kicker">Why Choose Us</div>
-            <h2>Experience Excellence With <span style={{ color: "var(--teal-300)" }}>AJ Power Solutions</span></h2>
+            <h2>Built on Experience. <span style={{ color: "var(--teal-300)" }}>Driven by Excellence.</span></h2>
             <div className="rule"></div>
           </div>
           <div className="rv mx-auto grid w-full max-w-[var(--maxw)] grid-cols-1 gap-7 sm:grid-cols-3">
@@ -134,12 +140,12 @@ export default function HomePage() {
 
       <section className="band tint slideframe" id="cta">
         <div className="bg">
-          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=85" alt="Earth city lights at night" />
+          <img src={resolveImage(HOME_BACKGROUNDS.cta.src, "background")} alt={HOME_BACKGROUNDS.cta.alt} />
         </div>
         <div className="glass rv">
           <h2>Transform Your Electrical Infrastructure</h2>
           <div className="rule"></div>
-          <p>Partner with us for HT &amp; LT electrification that adds economical value to your business while meeting the highest safety and quality standards.</p>
+          <p>Partner with us for reliable HT &amp; LT electrification that delivers cost-effective value without compromising on safety or quality.</p>
           <div className="acts"><Link className="btn btn-g" href="/contact">Start Your Project</Link></div>
         </div>
          <Footer />

@@ -33,7 +33,8 @@ img{display:block;max-width:100%}
    logo's teal swatch (--teal-500, sampled from the "J" mark). */
 header{position:sticky;top:0;z-index:80;background:var(--navy-900);box-shadow:0 2px 16px rgba(0,0,0,.3)}
 header::after{content:"";display:block;height:6px;width:100%;background:var(--navy-700);box-shadow:0 2px 10px -2px rgba(11,95,137,.55)}
-nav{position:relative;display:flex;align-items:stretch;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:0 28px;gap:20px}
+/* full-bleed: the bar spans the viewport rather than being capped at --maxw */
+nav{position:relative;display:flex;align-items:stretch;justify-content:space-between;width:100%;margin:0;padding:0 clamp(24px,4vw,72px);gap:20px}
 .brand{display:flex;align-items:center;gap:14px;flex:none}
 .brand .mk{width:104px;height:104px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden;padding:5px;animation:none!important;transform:none!important}
 /* .brand .mk{width:104px;height:104px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden;padding:5px} */
@@ -55,8 +56,13 @@ nav{position:relative;display:flex;align-items:stretch;justify-content:space-bet
 .brand .mk .fb{display:none}
 .brand .mk.nofile img{display:none}
 .brand .mk.nofile .fb{display:block}
-.brand .txt b{display:block;font-size:1.7rem;font-weight:800;letter-spacing:.06em;color:#fff;line-height:1}
-.brand .txt small{display:block;font-size:.82rem;font-weight:800;letter-spacing:.28em;color:#7fe4c4;margin-top:4px}
+/* one line — "AJ POWER" white, "SOLUTIONS" teal, set at the same size so it
+   reads as a single name rather than a title with a subtitle under it */
+.brand .txt{display:flex;align-items:baseline;gap:.34em;white-space:nowrap}
+.brand .txt b,
+.brand .txt small{display:block;font-size:clamp(1.05rem,1.35vw,1.5rem);font-weight:800;letter-spacing:.05em;line-height:1}
+.brand .txt b{color:#fff}
+.brand .txt small{color:#7fe4c4}
 .navlinks{display:flex;gap:0;align-items:stretch;flex:1;justify-content:space-between}
 header .navlinks a{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;flex:1;padding:0 12px;font-weight:800;font-size:.68rem;letter-spacing:.03em;text-transform:uppercase;color:#ffffff;
   background:transparent;
@@ -137,10 +143,10 @@ header .navlinks a{position:relative;display:flex;flex-direction:column;align-it
 .pinsec{position:relative}
 .pinsec-bg{position:sticky;top:0;height:100vh;margin-bottom:-100vh;z-index:0;overflow:hidden}
 .pinsec-bg img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.03)}
-/* Dark scrim over the pinned sky photo, held at 20% so the image stays clearly
-   visible. Legibility over cloud is carried by the .shead panel and the text
-   shadows on .statbar instead of by darkening the photo. */
-.pinsec-bg::after{content:"";position:absolute;inset:0;background:rgba(5,26,33,.2)}
+/* Dark scrim over the pinned sky photo, held at 5% so the image reads as close to
+   its own brightness as possible. Legibility over cloud is carried by the .shead
+   panel and the text shadows on .statbar rather than by darkening the photo. */
+.pinsec-bg::after{content:"";position:absolute;inset:0;background:rgba(5,26,33,.05)}
 .pinsec-content{position:relative;z-index:2;padding:110px 24px;max-width:var(--maxw);margin:0 auto;width:100%;min-width:0}
 .shead{max-width:620px;margin:0 auto 44px;text-align:center;color:#fff;
  background:linear-gradient(160deg,var(--navy-900),var(--navy-800));
@@ -184,11 +190,15 @@ header .navlinks a{position:relative;display:flex;flex-direction:column;align-it
 
 .hero{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0a2836}
 .wall{position:absolute;inset:0;display:flex;flex-direction:column;gap:6px;z-index:0;justify-content:center}
-.wall .roww{display:flex;gap:6px;width:max-content;animation:sideL 60s linear infinite}
-.wall .roww.d{animation:sideR 70s linear infinite}
+/* Neighbouring rows run opposite ways. Each shifts by exactly one copy of its own
+   list (see --copies), so the loop is seamless whatever the row length. */
+.wall .roww{display:flex;gap:6px;width:max-content;animation:drift 60s linear infinite}
+.wall .roww:nth-child(2){animation-name:driftRev;animation-duration:70s}
 .wall .roww img{width:300px;height:280px;object-fit:cover;flex:none}
-@keyframes sideL{to{transform:translateX(-50%)}}
-@keyframes sideR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+/* --copies is set per row by HeroWall: shifting by exactly one copy of the
+   list makes the loop seamless whatever the row length. */
+@keyframes drift{to{transform:translateX(calc(-100% / var(--copies,3)))}}
+@keyframes driftRev{from{transform:translateX(calc(-100% / var(--copies,3)))}to{transform:translateX(0)}}
 .hero .glass{max-width:720px;padding:36px 40px}
 .hero .bname{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:800;letter-spacing:-.02em;padding-bottom:14px;display:inline-block;margin-bottom:20px;
  background:linear-gradient(120deg,#5ef09a,#7fe4ff);-webkit-background-clip:text;background-clip:text;color:transparent;
@@ -202,15 +212,22 @@ header .navlinks a{position:relative;display:flex;flex-direction:column;align-it
    line up perfectly during the hold — no duplicated markup, no conveyor track. */
 .statbar{position:relative;z-index:3;width:100vw;margin:0 calc(50% - 50vw);overflow:hidden;
  border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);
- background:linear-gradient(180deg,rgba(5,24,36,.28),rgba(5,24,36,.18));
+ background:linear-gradient(180deg,rgba(5,24,36,.43),rgba(5,24,36,.33));
  -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);
  mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
 .statbar .track{display:flex;width:100%;max-width:var(--maxw);margin:0 auto}
-.statbar .s{flex:1 1 0;min-width:0;padding:26px 28px;text-align:left;border-right:1px solid rgba(255,255,255,.16)}
+/* Cells stretch to the tallest (the two-line "25+ Marquee Clients") and centre
+   their own content, so the shorter three sit balanced rather than top-heavy. */
+.statbar .s{flex:1 1 0;min-width:0;padding:26px 28px;text-align:left;border-right:1px solid rgba(255,255,255,.16);
+ display:flex;flex-direction:column;justify-content:center}
 .statbar .s:last-child{border-right:0}
-.statbar .n{font-size:clamp(2rem,3.4vw,3rem);font-weight:800;font-variant-numeric:tabular-nums;color:#fff;line-height:1;text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.statbar .n{font-size:clamp(1.7rem,2.85vw,2.5rem);font-weight:800;font-variant-numeric:tabular-nums;color:#fff;line-height:1.14;text-shadow:0 2px 18px rgba(0,0,0,.55)}
+/* Green stays on the unit suffix only. It reads well there, sitting inside the
+   number against the bar — on the label underneath it washes out against sky. */
 .statbar .n .u{color:var(--green-l)}
-.statbar .l{color:#e6f0f5;font-size:.98rem;margin-top:9px;font-weight:600;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+/* the word that shares the line with the number — same weight, slightly smaller */
+.statbar .n .t{margin-left:.3em;font-size:.82em}
+.statbar .l{color:#e6f0f5;font-size:1.14rem;margin-top:10px;font-weight:700;letter-spacing:.01em;text-shadow:0 2px 14px rgba(0,0,0,.6)}
 /* The four stats sit still — they used to cycle off the left edge and return from
    the right, which made the numbers hard to read at a glance. */
 /* heading directly on photo — no glass panel */
@@ -312,14 +329,23 @@ section .wrap,section .stack{width:100%}
   section.hero.slideframe{min-height:88vh;padding:0}
   .hero .glass{max-height:none;overflow:visible}
 }
-@media(max-width:720px){
-  .navlinks{position:fixed;inset:90px 0 auto 0;background:var(--navy-900);flex-direction:column;align-items:stretch;justify-content:flex-start;padding:12px 20px 20px;transform:translateY(-180%);transition:.3s;box-shadow:0 12px 24px rgba(0,0,0,.3);z-index:79}
-  .navlinks.open{transform:none}
-  .navlinks a{flex-direction:row;justify-content:flex-start;gap:14px;min-width:0;width:100%;margin-left:0;padding:14px 12px;border-radius:8px;font-size:.92rem;text-transform:none;letter-spacing:0;box-shadow:none;border:0!important;transform:none!important}
+/* The eight tabs stop fitting alongside the brand well before phone widths, so the
+   burger takes over at 980px. Only the nav collapses here — the page-layout rules
+   below still wait for 720px. The panel is anchored to the header rather than a
+   fixed offset so it always opens directly under the bar, whatever height it is. */
+@media(max-width:980px){
+  nav{position:static}
+  .navlinks{position:absolute;top:100%;left:0;right:0;background:var(--navy-900);flex-direction:column;align-items:stretch;justify-content:flex-start;padding:12px 20px 20px;transform:translateY(-180%);transition:.3s;box-shadow:0 12px 24px rgba(0,0,0,.3);z-index:-1}
+  .navlinks.open{transform:none;z-index:79}
+  /* matches the specificity of the desktop `header .navlinks a` rule above,
+     otherwise the column layout wins here and the icons stack over the labels */
+  header .navlinks a{flex-direction:row;justify-content:flex-start;gap:14px;min-width:0;width:100%;margin-left:0;padding:14px 12px;border-radius:8px;font-size:.92rem;text-transform:none;letter-spacing:0;box-shadow:none;border:0!important;transform:none!important}
   .navlinks a svg{width:19px;height:19px;flex:none}
   .navlinks a:hover,.navlinks a.on{box-shadow:none}
   .navlinks a::before{content:none}
   .burger{display:flex}
+}
+@media(max-width:720px){
   .cards,.svgrid{grid-template-columns:1fr}
   .fgrid{grid-template-columns:1fr}
   .statbar .s{padding:18px 10px}
@@ -335,8 +361,11 @@ section .wrap,section .stack{width:100%}
   .hero .glass{display:none}
   section.hero.slideframe{min-height:0;height:594px}
   .wall .roww img{width:200px;height:190px}
-  .brand .mk{width:76px;height:76px}
-  .brand .txt b{font-size:1.1rem}.brand .txt small{font-size:.58rem;letter-spacing:.18em}
+  /* the one-line brand has to share a narrow bar with the toggle and burger */
+  nav{padding:0 16px;gap:10px}
+  .brand{gap:9px}
+  .brand .mk{width:64px;height:64px}
+  .brand .txt b,.brand .txt small{font-size:clamp(.82rem,3.4vw,1.05rem);letter-spacing:.03em}
 }
 @media(prefers-reduced-motion:reduce){
   .wall .roww,.marq .track{animation:none}
@@ -1186,10 +1215,14 @@ html {scroll-behavior:smooth}
 
 
 .v2-scope .statrow {display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:6px 0 40px}
-.v2-scope .statrow .st {background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow-sm)}
-.v2-scope .statrow .st b {display:block;font-family:var(--font-display),sans-serif;font-size:2rem;color:var(--navy-900);font-variant-numeric:tabular-nums}
+/* Cards carry the figure and its noun on one line now, so the type is smaller than
+   a bare number needed and the cards centre their content — the longest ("25+
+   Marquee Clients") wraps to two lines while the rest stay on one. */
+.v2-scope .statrow .st {background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px 20px;text-align:center;box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column;justify-content:center}
+.v2-scope .statrow .st b {display:block;font-family:var(--font-display),sans-serif;font-size:1.5rem;line-height:1.22;color:var(--navy-900);font-variant-numeric:tabular-nums}
 .v2-scope .statrow .st b i {font-style:normal;color:var(--teal-600)}
-.v2-scope .statrow .st > span {color:var(--muted);font-weight:700;font-size:.86rem}
+.v2-scope .statrow .st > span {display:block;margin-top:9px;color:var(--muted);font-weight:700;font-size:.9rem}
 .v2-scope .statrow.home .st {transition:.25s}
 .v2-scope .statrow.home .st:hover {transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--line-strong)}
 .v2-scope .statrow.home .st b {background:linear-gradient(120deg,var(--navy-600),var(--teal-500));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:2.3rem}

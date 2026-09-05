@@ -205,17 +205,8 @@ export const CITIES: Record<CityKey, { tag: string; name: string; desc: string; 
 // AI-generated set, which carried a heavy teal grade that no colour correction
 // could make read as genuine. Sized for display (800px wide) rather than the
 // 2400px originals.
-// HeroWall deals these into three marquee rows by index % 3, so row membership is
-// 0,3,6,9 / 1,4,7,10 / 2,5,8,11. The order below is deliberate: it keeps each row
-// free of repeated subjects, and swaps the top and bottom rows relative to the
-// original numbering.
-//   row 1 -> switchgear corridor, green pylon, substation + hills, transformer
-//   row 2 -> lattice tower, switchgear insulators, tower lattice from below, substation
-//   row 3 -> pylon over field, worker on tower, data centre, lineman
-export const HERO_PICS = [
-  "03.jpg", "02.jpg", "12.jpg", "06.jpg", "05.jpg", "04.jpg",
-  "09.jpg", "08.jpg", "07.jpg", "01.jpg", "11.jpg", "10.jpg",
-].map((f) => `/images/hero/${f}`);
+// The hero wall and the page backgrounds are configured in lib/images.ts — laid
+// out row by row, and accepting Cloudinary links as well as local files.
 
 export const GALLERY_STOCK = [
   "1759109391537-ee5aec6f1775","1621905251189-08b45d6a269e","1758101755915-462eddc23f57",

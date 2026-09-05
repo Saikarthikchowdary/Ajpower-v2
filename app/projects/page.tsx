@@ -14,10 +14,12 @@ export default function ProjectsPage() {
     <div className="page active">
       <div className="litepage"><div className="inwrap">
         <div className="statrow">
-          <div className="st"><b>13<i>M+</i></b><span>Sq Ft Executed</span></div>
-          <div className="st"><b>250<i>+</i></b><span>Projects Delivered</span></div>
-          <div className="st"><b>25<i>+</i></b><span>Marquee Clients</span></div>
-          <div className="st"><b>3</b><span>Cities ·India</span></div>
+          {/* same split as the home stat bar: figure and its noun on one line, the
+              verb underneath */}
+          <div className="st"><b>13<i>M+</i> Sq. Ft.</b><span>Executed</span></div>
+          <div className="st"><b>250<i>+</i> Projects</b><span>Delivered</span></div>
+          <div className="st"><b>3 Metro Cities</b><span>Presence</span></div>
+          <div className="st"><b>25<i>+</i> Marquee Clients</b><span>Trusted</span></div>
         </div>
         <div className="pjfeat">
           <div>
