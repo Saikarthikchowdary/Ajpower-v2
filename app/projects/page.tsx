@@ -19,7 +19,7 @@ export default function ProjectsPage() {
           <div className="st"><b>13<i>M+</i> Sq. Ft.</b><span>Executed</span></div>
           <div className="st"><b>250<i>+</i> Projects</b><span>Delivered</span></div>
           <div className="st"><b>3 Metro Cities</b><span>Presence</span></div>
-          <div className="st"><b>25<i>+</i> Marquee Clients</b><span>Trusted</span></div>
+          <div className="st"><b>25<i>+</i> Clients</b><span>Trusted</span></div>
         </div>
         <div className="pjfeat">
           <div>

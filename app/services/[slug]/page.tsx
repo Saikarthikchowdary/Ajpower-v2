@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import PageCta from "@/components/PageCta";
+import SiteImage from "@/components/SiteImage";
 import { SERVICES } from "@/lib/data";
+import { serviceSlotId } from "@/lib/siteImages";
 
 export function generateStaticParams() {
   return SERVICES.map((s) => ({ slug: s.id }));
@@ -26,8 +28,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         <Link className="backlink" href="/services">← All services</Link>
         <h1 className="secthead" style={{ marginTop: 14 }}>{s.t}</h1>
         <div className="sdhero">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={s.img} alt={s.t} />
+          <SiteImage slot={serviceSlotId(s.id)} fallback={s.img} preset="photo" alt={s.t} />
         </div>
         <div className="sdbody">
           <div className="txt">{s.d.map((p, i) => <p key={i}>{p}</p>)}</div>

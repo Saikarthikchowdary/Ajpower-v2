@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -58,6 +59,8 @@ export default function AdminLoginPage() {
         <button className="adm-btn adm-btn-primary" type="submit" disabled={busy}>
           {busy ? "Signing in…" : "Sign in"}
         </button>
+
+        <Link className="adm-login-back" href="/">← Back to the website</Link>
       </form>
     </div>
   );

@@ -30,7 +30,14 @@ const PRESETS = {
   wall: "c_fill,g_auto,w_600,h_560,f_auto,q_auto",
   /* full-page backdrop — covers the viewport, so it needs to be larger */
   background: "c_fill,g_auto,w_1600,h_1000,f_auto,q_auto",
+  /* a service photo — the largest use is the hero on a service detail page */
+  photo: "c_fill,g_auto,w_1400,h_760,f_auto,q_auto",
+  /* preview card in the admin panel — never shown on the public site */
+  thumb: "c_fill,g_auto,w_480,h_360,f_auto,q_auto",
 } as const;
+
+/** The delivery sizes above, as a type — so callers cannot ask for one that does not exist. */
+export type ImagePreset = keyof typeof PRESETS;
 
 /* Cloudinary option keys, used to spot options already sitting in a pasted link.
    Checking against real keys rather than "looks like x_y" keeps a folder called
@@ -66,7 +73,7 @@ function isOptionSegment(segment: string): boolean {
  * arriving upscaled, soft, and heavier than the original. So either the plain
  * delivery URL or one carrying options can be pasted, and both behave the same.
  */
-export function resolveImage(src: string, preset: keyof typeof PRESETS): string {
+export function resolveImage(src: string, preset: ImagePreset): string {
   const match = src.match(CLOUDINARY_UPLOAD);
   if (!match) return src;
   const [, base, rest] = match;
@@ -160,10 +167,14 @@ export const HOME_BACKGROUNDS: Record<"main" | "cta", { src: string; alt: string
   },
 };
 
-/** Finds the background for a route, preferring the most specific match. */
-export function backgroundForPath(pathname: string): PageBackground | null {
+/** Finds the background for a route, preferring the most specific match. The
+    matched route comes back with it, because the admin panel keys each page's
+    replaceable background by that route (see lib/siteImages.ts). */
+export function backgroundForPath(
+  pathname: string,
+): (PageBackground & { route: string }) | null {
   const hit = Object.entries(PAGE_BACKGROUNDS)
     .filter(([route]) => pathname === route || pathname.startsWith(route + "/"))
     .sort((a, b) => b[0].length - a[0].length)[0];
-  return hit ? hit[1] : null;
+  return hit ? { ...hit[1], route: hit[0] } : null;
 }

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageCta from "@/components/PageCta";
+import SiteImage from "@/components/SiteImage";
 import { SERVICES } from "@/lib/data";
+import { serviceSlotId } from "@/lib/siteImages";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -28,8 +30,8 @@ export default function ServicesPage() {
               style={{ background: "var(--surface)", boxShadow: "0 20px 44px -22px rgba(5,26,33,.28)" }}
             >
               <div className="relative h-[240px] w-full shrink-0 overflow-hidden rounded-t-[28px]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.img} alt={s.t} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <SiteImage slot={serviceSlotId(s.id)} fallback={s.img} preset="photo" alt={s.t}
+                  loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute left-5 top-5 grid h-12 w-12 place-items-center rounded-full text-[.92rem] font-bold text-white shadow-[0_8px_18px_-4px_rgba(0,0,0,.4)]" style={{ background: "linear-gradient(135deg,var(--teal-500),var(--navy-700))" }}>
                   {s.no}
                 </div>

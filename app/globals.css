@@ -34,7 +34,7 @@ img{display:block;max-width:100%}
 header{position:sticky;top:0;z-index:80;background:var(--navy-900);box-shadow:0 2px 16px rgba(0,0,0,.3)}
 header::after{content:"";display:block;height:6px;width:100%;background:var(--navy-700);box-shadow:0 2px 10px -2px rgba(11,95,137,.55)}
 /* full-bleed: the bar spans the viewport rather than being capped at --maxw */
-nav{position:relative;display:flex;align-items:stretch;justify-content:space-between;width:100%;margin:0;padding:0 clamp(24px,4vw,72px);gap:20px}
+header nav{position:relative;display:flex;align-items:stretch;justify-content:space-between;width:100%;margin:0;padding:0 clamp(24px,4vw,72px);gap:20px}
 .brand{display:flex;align-items:center;gap:14px;flex:none}
 .brand .mk{width:104px;height:104px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden;padding:5px;animation:none!important;transform:none!important}
 /* .brand .mk{width:104px;height:104px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden;padding:5px} */
@@ -216,18 +216,18 @@ header .navlinks a{position:relative;display:flex;flex-direction:column;align-it
  -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);
  mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
 .statbar .track{display:flex;width:100%;max-width:var(--maxw);margin:0 auto}
-/* Cells stretch to the tallest (the two-line "25+ Marquee Clients") and centre
-   their own content, so the shorter three sit balanced rather than top-heavy. */
-.statbar .s{flex:1 1 0;min-width:0;padding:26px 28px;text-align:left;border-right:1px solid rgba(255,255,255,.16);
+/* Cells stretch to the tallest and centre their own content, so if one tail
+   ever wraps the other three stay balanced rather than top-heavy. */
+.statbar .s{flex:1 1 0;min-width:0;padding:24px 28px;text-align:left;border-right:1px solid rgba(255,255,255,.16);
  display:flex;flex-direction:column;justify-content:center}
 .statbar .s:last-child{border-right:0}
-.statbar .n{font-size:clamp(1.7rem,2.85vw,2.5rem);font-weight:800;font-variant-numeric:tabular-nums;color:#fff;line-height:1.14;text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.statbar .n{font-size:clamp(1.78rem,2.98vw,2.62rem);font-weight:800;font-variant-numeric:tabular-nums;color:#fff;line-height:1.14;text-shadow:0 2px 18px rgba(0,0,0,.55)}
 /* Green stays on the unit suffix only. It reads well there, sitting inside the
    number against the bar — on the label underneath it washes out against sky. */
 .statbar .n .u{color:var(--green-l)}
 /* the word that shares the line with the number — same weight, slightly smaller */
 .statbar .n .t{margin-left:.3em;font-size:.82em}
-.statbar .l{color:#e6f0f5;font-size:1.14rem;margin-top:10px;font-weight:700;letter-spacing:.01em;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.statbar .l{color:#e6f0f5;font-size:1.19rem;margin-top:10px;font-weight:700;letter-spacing:.01em;text-shadow:0 2px 14px rgba(0,0,0,.6)}
 /* The four stats sit still — they used to cycle off the left edge and return from
    the right, which made the numbers hard to read at a glance. */
 /* heading directly on photo — no glass panel */
@@ -334,7 +334,7 @@ section .wrap,section .stack{width:100%}
    below still wait for 720px. The panel is anchored to the header rather than a
    fixed offset so it always opens directly under the bar, whatever height it is. */
 @media(max-width:980px){
-  nav{position:static}
+  header nav{position:static}
   .navlinks{position:absolute;top:100%;left:0;right:0;background:var(--navy-900);flex-direction:column;align-items:stretch;justify-content:flex-start;padding:12px 20px 20px;transform:translateY(-180%);transition:.3s;box-shadow:0 12px 24px rgba(0,0,0,.3);z-index:-1}
   .navlinks.open{transform:none;z-index:79}
   /* matches the specificity of the desktop `header .navlinks a` rule above,
@@ -348,9 +348,9 @@ section .wrap,section .stack{width:100%}
 @media(max-width:720px){
   .cards,.svgrid{grid-template-columns:1fr}
   .fgrid{grid-template-columns:1fr}
-  .statbar .s{padding:18px 10px}
-  .statbar .n{font-size:clamp(1.05rem,4.4vw,1.6rem)}
-  .statbar .l{font-size:.7rem;margin-top:6px;line-height:1.35}
+  .statbar .s{padding:16px 12px}
+  .statbar .n{font-size:clamp(1.1rem,4.6vw,1.67rem)}
+  .statbar .l{font-size:.74rem;margin-top:6px;line-height:1.35}
   .glass{padding:32px 22px}
   /* Mobile hero: drop the copy card entirely and let the scrolling image wall
      stand on its own. Scoped to .hero so glass panels elsewhere are unaffected.
@@ -362,7 +362,7 @@ section .wrap,section .stack{width:100%}
   section.hero.slideframe{min-height:0;height:594px}
   .wall .roww img{width:200px;height:190px}
   /* the one-line brand has to share a narrow bar with the toggle and burger */
-  nav{padding:0 16px;gap:10px}
+  header nav{padding:0 16px;gap:10px}
   .brand{gap:9px}
   .brand .mk{width:64px;height:64px}
   .brand .txt b,.brand .txt small{font-size:clamp(.82rem,3.4vw,1.05rem);letter-spacing:.03em}
@@ -814,6 +814,7 @@ section .wrap,section .stack{width:100%}
 .adm-galbar{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;
   font-size:.8rem;color:#6b7f8c;font-weight:700}
 
+
 /* burger (mobile) */
 .adm-burger{display:none;position:fixed;top:14px;right:14px;z-index:60;flex-direction:column;gap:5px;
   background:var(--navy-d);border:0;border-radius:9px;padding:11px 10px;cursor:pointer}
@@ -1237,18 +1238,6 @@ html {scroll-behavior:smooth}
 .v2-scope .pj .cnt2 {position:absolute;top:18px;right:18px;background:var(--navy-800);color:var(--teal-300);font-size:.7rem;font-weight:700;padding:5px 11px;border-radius:999px}
 .v2-scope .secthead {margin:44px 0 20px;font-size:1.5rem;color:var(--ink);letter-spacing:-.02em}
 
-
-.v2-scope .loadmore {max-width:420px;margin:52px auto 0!important;display:flex;flex-direction:column;align-items:center;gap:16px}
-.v2-scope .loadmore-track {width:100%;height:7px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
-.v2-scope .loadmore-fill {height:100%;border-radius:999px;background:linear-gradient(90deg,var(--teal-500),var(--emerald-500));transition:width .5s cubic-bezier(.2,.7,.3,1)}
-.v2-scope .loadmore-count {font-size:.88rem;font-weight:600;color:var(--muted)}
-.v2-scope .loadmore-count b {color:var(--navy-800);font-weight:700}
-.v2-scope .loadmore-btn {display:inline-flex;align-items:center;gap:9px;padding:15px 34px;border-radius:999px;border:0;
- background:linear-gradient(120deg,var(--teal-500),var(--emerald-500));color:#fff;font:inherit;font-weight:800;font-size:.92rem;letter-spacing:.01em;cursor:pointer;
- box-shadow:0 14px 28px -12px rgba(8,155,160,.55);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
-.v2-scope .loadmore-btn:hover {transform:translateY(-2px);box-shadow:0 18px 34px -12px rgba(8,155,160,.65);filter:brightness(1.05)}
-.v2-scope .loadmore-btn:active {transform:translateY(0)}
-:root[data-theme="dark"] .v2-scope .loadmore-count b {color:#DCE7F0}
 .v2-scope .pjfeat {background:linear-gradient(120deg,var(--navy-900),var(--navy-700));border-radius:var(--radius-lg);color:#fff;padding:40px 44px;display:grid;grid-template-columns:1.5fr 1fr;gap:26px;align-items:center;margin-bottom:26px;position:relative;overflow:hidden}
 .v2-scope .pjfeat::before {content:"";position:absolute;inset:0;opacity:.1;background-image:linear-gradient(rgba(255,255,255,.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.4) 1px,transparent 1px);background-size:44px 44px}
 .v2-scope .pjfeat h3 {font-size:clamp(1.4rem,2.6vw,2rem);position:relative;color:#fff}
@@ -1648,6 +1637,8 @@ html {scroll-behavior:smooth}
   background:linear-gradient(150deg,var(--navy-950),var(--navy-800) 60%,var(--navy-700))}
 .v2-scope .adm-login-card {background:var(--surface);border-radius:var(--radius-lg);padding:34px 30px;width:100%;max-width:400px;
   box-shadow:var(--shadow-lg);display:flex;flex-direction:column}
+.v2-scope .adm-login-back {display:block;margin-top:18px;text-align:center;font-size:.86rem;font-weight:700;color:var(--muted);text-decoration:none}
+.v2-scope .adm-login-back:hover {color:var(--teal-600);text-decoration:underline}
 .v2-scope .adm-login-logo {display:grid;place-items:center;margin-bottom:14px}
 .v2-scope .adm-login-logo img {border-radius:50%;background:#fff}
 .v2-scope .adm-login-card h1 {font-size:1.45rem;text-align:center;color:var(--navy-900);margin:0}
@@ -1715,6 +1706,30 @@ html {scroll-behavior:smooth}
 .v2-scope .adm-galcard img {width:100%;aspect-ratio:4/3;object-fit:cover;display:block;pointer-events:none}
 .v2-scope .adm-galbar {display:flex;align-items:center;justify-content:space-between;padding:8px 10px;
   font-size:.8rem;color:var(--muted);font-weight:700}
+
+/* site images manager — one card per replaceable picture on the public site */
+.v2-scope .adm-note {background:var(--emerald-100);border:1px solid var(--emerald-500);color:#12703F;
+  border-radius:9px;padding:11px 14px;font-size:.87rem;font-weight:600;margin-bottom:16px}
+.v2-scope .adm-note.is-err {background:#FCF4F3;border-color:#F0C6C4;color:#9C4038}
+.v2-scope .adm-slotgroup {margin-top:26px}
+.v2-scope .adm-slothead {font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 12px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+.v2-scope .adm-slots {display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:15px}
+.v2-scope .adm-slot {background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden;
+  display:flex;flex-direction:column}
+.v2-scope .adm-slot.is-custom {border-color:var(--emerald-500);box-shadow:0 0 0 1px var(--emerald-500) inset}
+.v2-scope .adm-slot img {width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--surface-2)}
+.v2-scope .adm-slotbody {padding:12px 13px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.v2-scope .adm-slotbody b {font-size:.9rem;color:var(--ink);line-height:1.4;font-weight:700}
+.v2-scope .adm-slottag {align-self:flex-start;font-size:.72rem;font-weight:700;border-radius:999px;
+  padding:3px 10px;background:var(--surface-2);color:var(--muted)}
+.v2-scope .adm-slottag.on {background:var(--emerald-100);color:#12703F}
+.v2-scope .adm-slotacts {display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:auto}
+.v2-scope .adm-slotacts .adm-btn {padding:9px 14px;font-size:.83rem}
+.v2-scope .adm-upload.is-busy {opacity:.6;cursor:progress}
+:root[data-theme="dark"] .v2-scope .adm-note {background:rgba(36,188,110,.12);border-color:rgba(36,188,110,.45);color:#7BE8B0}
+:root[data-theme="dark"] .v2-scope .adm-slottag.on {background:rgba(36,188,110,.16);color:#6EE7A8}
+:root[data-theme="dark"] .v2-scope .adm-note.is-err {background:rgba(214,90,80,.12);border-color:rgba(214,90,80,.45);color:#F3B3AC}
 .v2-scope .adm-burger {display:none;position:fixed;top:14px;right:14px;z-index:60;flex-direction:column;gap:5px;
   background:var(--navy-950);border:0;border-radius:9px;padding:11px 10px;cursor:pointer}
 .v2-scope .adm-burger span {width:22px;height:2.5px;background:#fff;border-radius:3px;display:block}

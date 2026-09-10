@@ -4,7 +4,9 @@ import Footer from "@/components/Footer";
 import ClientsMarquee from "@/components/ClientsMarquee";
 import CountUp from "@/components/CountUp";
 import { SERVICES } from "@/lib/data";
-import { HOME_BACKGROUNDS, resolveImage } from "@/lib/images";
+import SiteImage from "@/components/SiteImage";
+import { HOME_BACKGROUNDS } from "@/lib/images";
+import { serviceSlotId } from "@/lib/siteImages";
 
 /* `tail` rides on the same line as the counted number ("13M+ Sq. Ft."), `label`
    is the smaller line under it. */
@@ -12,7 +14,7 @@ const STATS = [
   { to: 13, unit: "M+", tail: "Sq. Ft.", label: "Executed" },
   { to: 250, unit: "+", tail: "Projects", label: "Delivered" },
   { to: 3, unit: "", tail: "Metro Cities", label: "Presence" },
-  { to: 25, unit: "+", tail: "Marquee Clients", label: "Trusted" },
+  { to: 25, unit: "+", tail: "Clients", label: "Trusted" },
 ];
 
 export default function HomePage() {
@@ -41,8 +43,8 @@ export default function HomePage() {
 
       <section className="pinsec">
         <div className="pinsec-bg">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={resolveImage(HOME_BACKGROUNDS.main.src, "background")} alt={HOME_BACKGROUNDS.main.alt} />
+          <SiteImage slot="home-bg-main" fallback={HOME_BACKGROUNDS.main.src}
+            preset="background" alt={HOME_BACKGROUNDS.main.alt} />
         </div>
 
         <div className="pinsec-content" id="clients">
@@ -127,8 +129,8 @@ export default function HomePage() {
               <Link className="svc rv" href={`/services/${s.id}`} aria-label={`${s.t} details`} key={s.id}>
                 <span className="bar"></span>
                 <div className="ph">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={s.img} alt={s.t} loading="lazy" />
+                  <SiteImage slot={serviceSlotId(s.id)} fallback={s.img} preset="photo"
+                    alt={s.t} loading="lazy" />
                   <span className="no">SERVICE · {s.no}</span>
                 </div>
                 <div className="bd"><h3>{s.t}</h3><p>{s.s}</p></div>
@@ -140,7 +142,8 @@ export default function HomePage() {
 
       <section className="band tint slideframe" id="cta">
         <div className="bg">
-          <img src={resolveImage(HOME_BACKGROUNDS.cta.src, "background")} alt={HOME_BACKGROUNDS.cta.alt} />
+          <SiteImage slot="home-bg-cta" fallback={HOME_BACKGROUNDS.cta.src}
+            preset="background" alt={HOME_BACKGROUNDS.cta.alt} />
         </div>
         <div className="glass rv">
           <h2>Transform Your Electrical Infrastructure</h2>

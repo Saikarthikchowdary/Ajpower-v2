@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import type { User } from "firebase/auth";
 import EnquiriesPanel from "@/components/admin/EnquiriesPanel";
 import GalleryPanel from "@/components/admin/GalleryPanel";
+import ImagesPanel from "@/components/admin/ImagesPanel";
 
 export default function AdminPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [checking, setChecking] = useState(true);
-  const [tab, setTab] = useState<"enquiries" | "gallery">("enquiries");
+  const [tab, setTab] = useState<"enquiries" | "gallery" | "images">("enquiries");
   const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
@@ -59,12 +60,16 @@ export default function AdminPage() {
             onClick={() => { setTab("enquiries"); setNavOpen(false); }}>Enquiries</button>
           <button className={tab === "gallery" ? "on" : ""}
             onClick={() => { setTab("gallery"); setNavOpen(false); }}>Gallery</button>
+          <button className={tab === "images" ? "on" : ""}
+            onClick={() => { setTab("images"); setNavOpen(false); }}>Site Images</button>
         </nav>
         <button className="adm-logout" onClick={logout}>Log out</button>
       </aside>
 
       <main className="adm-main">
-        {tab === "enquiries" ? <EnquiriesPanel /> : <GalleryPanel />}
+        {tab === "enquiries" && <EnquiriesPanel />}
+        {tab === "gallery" && <GalleryPanel />}
+        {tab === "images" && <ImagesPanel />}
       </main>
     </div>
   );
